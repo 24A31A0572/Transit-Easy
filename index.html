@@ -1,1 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TransitEasy</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<header>
+  <div class="logo">🚌 TransitEasy</div>
+  <nav>
+    <a onclick="showSection('home')">🏠 Home</a>
+    <a onclick="showSection('about')">ℹ️ About</a>
+    <a onclick="showSection('feedback')">💬 Feedback</a>
+    <a onclick="showSection('dashboard')">📊 Dashboard</a>
+  </nav>
+</header>
+
+<section id="home" class="hero">
+  <h1>Public Transport Route Planner</h1>
+  <p>Plan your journey smarter. Travel greener. Explore iconic landmarks with accessibility.</p>
+
+  <div class="features">
+    <span>♿ Accessible Routes</span>
+    <span>📍 Tourist Viewpoints</span>
+    <span>🌱 Eco-Friendly Travel</span>
+  </div>
+
+  <button class="start-btn" onclick="showSection('planner')">
+    Start Planning your Route →
+  </button>
+</section>
+
+<section id="planner" class="hidden">
+  <div class="form-card">
+    <h2>Plan Your Route</h2>
+
+    <label>City</label>
+    <select id="city" onchange="loadPlaces()"></select>
+
+    <label>Source</label>
+    <select id="source"></select>
+
+    <label>Destination</label>
+    <select id="destination"></select>
+
+    <button onclick="findRoute()">🔍 Find Route</button>
+  </div>
+</section>
+
+<section id="results" class="hidden">
+
+  <div class="center">
+    <button class="back-btn" onclick="showSection('planner')">⬅ Back</button>
+  </div>
+
+  <h2 id="routeTitle"></h2>
+
+  <div class="card highlight">
+    <div class="top">
+      <h3>✔ Recommended Route</h3>
+      <span class="tag green">Best</span>
+    </div>
+    <p>🚇 Metro → 🚶 Walk</p>
+    <p>⏱ 20 mins | 💰 ₹30</p>
+    <p id="metroStops"></p>
+  </div>
+
+  <div class="card">
+    <div class="top">
+      <h4>🚌 Bus Route</h4>
+      <span class="tag">Cheapest</span>
+    </div>
+    <p>⏱ 35 mins | 💰 ₹15</p>
+    <p id="busStops"></p>
+  </div>
+
+  <div class="card">
+    <div class="top">
+      <h4>🚇 Metro Route</h4>
+      <span class="tag blue">Fastest</span>
+    </div>
+    <p>⏱ 15 mins | 💰 ₹40</p>
+    <p id="metroOnlyStops"></p>
+  </div>
+
+  <div class="card">
+    <h4>🚌 + 🚖 Mixed Route</h4>
+    <p>⏱ 25 mins | 💰 ₹25</p>
+    <p id="mixedStops"></p>
+  </div>
+
+  <div class="card">
+    <h3>Route Path</h3>
+    <div id="path"></div>
+  </div>
+
+  <div class="card">
+    <h3>♿ Accessibility</h3>
+    <p>✔ Wheelchair Accessible</p>
+    <p>✔ Elevators</p>
+    <p>✔ Ramps</p>
+    <p>✔ Low-floor buses</p>
+  </div>
+  <div class="center">
+  <button class="start-btn" onclick="showPlaces()">📍 View Places You Can Visit</button>
+  <button class="start-btn" onclick="showTransportDetails()">🚌 Transport Details</button>
+</div>
+
+</section>
+
+<section id="placesSection" class="hidden">
+  <div class="center">
+    <button class="back-btn" onclick="showSection('results')">⬅ Back</button>
+  </div>
+
+  <h2 style="text-align:center;">Places You Can Visit</h2>
+  <div id="places"></div>
+</section>
+ <section id="transportDetails" class="hidden">
+
+  <div class="center">
+    <button class="back-btn" onclick="showSection('results')">⬅ Back</button>
+  </div>
+
+  <h2 style="text-align:center;">🚌 Transport Details</h2>
+
+  <div class="card">
+    <h3>🚌 Bus Timings</h3>
+    <p id="busTimes"></p>
+  </div>
+
+  <div class="card">
+    <h3>🚇 Metro Timings</h3>
+    <p id="metroTimes"></p>
+  </div>
+
+  <div class="card">
+    <h3>🚆 Train Timings</h3>
+    <p id="trainTimes"></p>
+  </div>
+
+</section>
+
+<section id="dashboard" class="hidden">
+  <div class="center">
+    <button class="back-btn" onclick="showSection('home')">⬅ Back</button>
+  </div>
+
+  <h2 style="text-align:center;">📊 Dashboard</h2>
+
+  <div class="card">
+    <h3>🚍 Available Transport</h3>
+    <p>✔ Buses</p>
+    <p>✔ Metro</p>
+    <p>✔ Local Trains</p>
+    <p>✔ Auto / Cab</p>
+  </div>
+
+  <div class="card">
+    <h3>📈 Usage Stats</h3>
+    <p>Total Routes Searched: <b id="dashRoutes">0</b></p>
+    <p>Most Searched City: <b id="dashCity">-</b></p>
+  </div>
+
+  <div class="card">
+    <h3>♿ Accessibility Support</h3>
+    <p>✔ Wheelchair Friendly Routes</p>
+    <p>✔ Elevators Available</p>
+    <p>✔ Low-floor buses</p>
+    <p>✔ Audio Assistance</p>
+  </div>
+
+  <div class="card">
+    <h3>🌱 Eco Impact</h3>
+    <p>Using public transport reduces pollution 🚫🌫</p>
+    <p>Save fuel and protect environment 🌍</p>
+  </div>
+
+</section>
+
+<section id="feedback" class="hidden">
+  <div class="center">
+    <button class="back-btn" onclick="showSection('home')">⬅ Back</button>
+  </div>
+
+  <h2>Feedback Portal</h2>
+
+  <div class="feedback-form">
+    <input id="name" placeholder="Enter your name">
+    <textarea id="msg" placeholder="Enter your message"></textarea>
+    <button class="green" onclick="submitFeedback()">Submit</button>
+  </div>
+
+  <p id="thankyou" class="hidden">✅ Thank you for your feedback!</p>
+</section>
+
+<!-- ✅ MODIFIED ABOUT PAGE ONLY -->
+<section id="about" class="hidden about-section">
+
+  <h2>Project Overview</h2>
+  <p class="about-desc">
+    The Public Transport Route Planner helps users find the best public transport routes — including bus, metro, and train — between any source and destination within supported Indian metro cities.
+  </p>
+
+  <div class="grid-2">
+    <div class="about-box">🔁 Best recommended route</div>
+    <div class="about-box">📍 Alternative available routes</div>
+    <div class="about-box">⏱ Estimated travel time</div>
+    <div class="about-box">₹ Estimated travel cost</div>
+  </div>
+
+  <h2>Key Features</h2>
+  <div class="grid-2">
+    <div class="about-box">Route optimization with best & alternative routes</div>
+    <div class="about-box">Time and cost estimation for each route</div>
+    <div class="about-box">Bus, metro & railway transport modes</div>
+    <div class="about-box">Accessibility info — ramps, elevators</div>
+    <div class="about-box">Viewpoints discovery between source & destination</div>
+    <div class="about-box">Multi-modal journey planning</div>
+  </div>
+
+  <div class="grid-2 highlight-box">
+    <div>
+      <h3>♿ Accessibility Focus</h3>
+      <p>
+        We believe public transport should be accessible to everyone. The app highlights whether stations and vehicles offer ramps, lifts, and other facilities for persons with disabilities.
+      </p>
+    </div>
+
+    <div>
+      <h3>👁 Viewpoints Discovery</h3>
+      <p>
+        Travelling somewhere new? Discover tourist attractions, scenic spots, and notable landmarks along your route.
+      </p>
+    </div>
+  </div>
+
+  <h2>Future Enhancements</h2>
+  <div class="grid-3">
+    <div class="about-box">Live bus & train tracking</div>
+    <div class="about-box">Real-time traffic updates</div>
+    <div class="about-box">Dedicated mobile application</div>
+    <div class="about-box">Expansion to all cities across India</div>
+    <div class="about-box">Multi-language support</div>
+    <div class="about-box">More transport & location data integration</div>
+  </div>
+
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
