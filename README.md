@@ -113,8 +113,8 @@ TransitEasy aims to improve the public transport experience by combining route o
 
 👩‍💻 Authors
 D.S.L.S.S.VINAY BHANU
-V.SAI PRASANNA
+V..SAI PRASANNA
 K.ASHOK
-PRASAD
+S.PRASAD
 
 ---
